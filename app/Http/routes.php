@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'TwilioController@index');
+Route::get('/create', 'TwilioController@create');
+
+Route::any('/call', 'TwilioController@call');
+Route::any('/sms', 'TwilioController@sms');
+
+Route::any('/code', 'TwilioController@code');
+Route::any('/play', 'TwilioController@play');
