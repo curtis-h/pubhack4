@@ -58,6 +58,7 @@ class TwilioController extends BaseController
                 $player->number = $number;
             }
             
+            $player->dead    = false;
             $player->game_id = $game->id;
             $player->save();
         }
@@ -69,6 +70,10 @@ class TwilioController extends BaseController
     
     public function play() {
         $player = Player::where('number', Request::input('From'), '')->first();
+        
+        if($player->dead) {
+            return view('dead');
+        }
         
         if($digit = Request::input('Digits', false)) {
             $player->digit = $digit;
@@ -98,7 +103,28 @@ class TwilioController extends BaseController
         return view('play');
     }
     
-    public function sms() {
+    public function dead() {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token'); // allow certain headers
         
+        if($number = Request::input('number', false)) {
+            $player = Player::find($number);
+            $player->dead = true;
+            $player->save();
+        }
+        
+        return response("ok", 200);
     }
+    
+    
+    
+    
+    public function sms() {
+        $data = json_encode(Request::all());
+        error_log($data);
+        return '200';
+    }
+    
+    
 }

@@ -16,6 +16,7 @@ class CreatePlayerTable extends Migration
             $table->increments('id');
             $table->integer('game_id');
             $table->string('number');
+            $table->boolean('dead')->default(false);
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreatePlayerTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('players');
     }
 }

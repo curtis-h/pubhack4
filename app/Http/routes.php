@@ -19,3 +19,5 @@ Route::any('/sms', 'TwilioController@sms');
 
 Route::any('/code', 'TwilioController@code');
 Route::any('/play', 'TwilioController@play');
+
+Route::any('/dead', 'TwilioController@dead');
