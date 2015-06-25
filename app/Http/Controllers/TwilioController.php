@@ -62,6 +62,8 @@ class TwilioController extends BaseController
             $player->save();
         }
         
+        $this->pusher->trigger('my-channel', 'player_joined', $player->toJson());
+        
         return view('code');
     }
     
